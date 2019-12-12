@@ -1,0 +1,103 @@
+def Tic_Tac_Toe():
+    
+    board = ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ']
+    move_check = []
+    
+    def game_status(board):
+        global win
+        
+        win = (
+        (board[1] == board[2] == board[3] in 'XO') or
+        (board[4] == board[5] == board[6] in 'XO') or
+        (board[7] == board[8] == board[9] in 'XO') or
+        (board[1] == board[4] == board[7] in 'XO') or
+        (board[2] == board[5] == board[8] in 'XO') or
+        (board[3] == board[6] == board[9] in 'XO') or
+        (board[1] == board[5] == board[9] in 'XO') or
+        (board[3] == board[5] == board[7] in 'XO')
+            )
+        if win == False:
+            if len(move_check) == 9:
+                win = 'Tie'
+        return win
+    
+    def new_game():
+            new_game = input('\nDo you want to play again (y/n)? ')
+            if new_game.lower() == 'y':
+                Tic_Tac_Toe()
+
+    def display_board(board):
+        print(board[7]+'  | '+board[8]+' | '+board[9]+' ')
+        print('---|---|---')
+        print(board[4]+'  | '+board[5]+' | '+board[6]+' ')
+        print('---|---|---')
+        print(board[1]+'  | '+board[2]+' | '+board[3]+' ')    
+
+    def player_input():
+        marker = ''
+        global player1
+        global player2
+        
+        while marker.lower() != 'x' and marker.lower() != 'o':
+            marker = input('\nPlayer 1 choose X or O: ')
+
+        player1 = marker.upper()
+        if player1 == 'X':
+            player2 = 'O'
+        else:
+            player2 = 'X'
+
+        print(f'Player 1 is {player1}\nPlayer 2 is {player2}')
+        return player1,player2
+    
+    def movep1():
+        try:
+            p1_input = int(input(f'\nPlayer 1 choose position of {player1}: '))
+            if p1_input in move_check:
+                print('This spot is occupied, try again')
+                movep1()
+            else:
+                board[p1_input] = player1
+                move_check.append(p1_input)      
+        except (ValueError,TypeError,IndexError):
+            print('invalid move, try again')
+            movep1()
+
+    def movep2():
+        try:
+            p2_input = int(input(f'\nPlayer 2 choose position of {player2}: '))
+            if p2_input in move_check:
+                print('This spot is occupied, try again')
+                movep2()
+            else:
+                board[p2_input] = player2
+                move_check.append(p2_input)
+        except (ValueError,TypeError,IndexError):
+            print('invalid move, try again')
+            movep2()
+            
+    display_board(board)
+    player_input()
+    game_status(board)
+    
+    while win == False:
+        movep1()
+        display_board(board)
+        game_status(board)
+        if win == True:
+            print('\nPlayer 1 wins. Congrats!')
+            new_game()
+            break
+        elif win == 'Tie':
+            print("\nIt's a tie")
+            new_game()
+            break
+        movep2() 
+        display_board(board)
+        game_status(board)
+        if win == True:
+            print('\nPlayer 2 wins. Congrats!')
+            new_game()
+            break
+            
+Tic_Tac_Toe()
