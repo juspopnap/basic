@@ -1,4 +1,5 @@
 def Tic_Tac_Toe():
+    from IPython.display import clear_output
     
     board = ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ']
     move_check = []
@@ -27,6 +28,7 @@ def Tic_Tac_Toe():
                 Tic_Tac_Toe()
 
     def display_board(board):
+        clear_output()
         print(board[7]+'  | '+board[8]+' | '+board[9]+' ')
         print('---|---|---')
         print(board[4]+'  | '+board[5]+' | '+board[6]+' ')
